@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beavio — Style a Flower Bar in Minutes | Early Launch</title>
+<meta name="description" content="Thoughtfully designed stands and buckets for weddings, showers, and gatherings. Join the list for early access, a launch discount, and our free DIY Bouquet Guide.">
+<link rel="icon" href="assets/logo-forest.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: { DEFAULT: '#18332D', dark: '#0F2420' },
+          ivory: '#F5F1EC',
+          cream: '#F8F6F3',
+          blush: { DEFAULT: '#F2E7E7', dark: '#E7D5D5' },
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'Georgia', 'serif'],
+          sans: ['"Inter"', 'sans-serif'],
+        },
+        boxShadow: {
+          soft: '0 1px 2px rgba(24,51,45,0.04), 0 12px 28px -8px rgba(24,51,45,0.18)',
+          lift: '0 2px 4px rgba(24,51,45,0.06), 0 20px 40px -12px rgba(24,51,45,0.28)',
+          badge: '0 10px 30px -6px rgba(24,51,45,0.45)',
+        },
+        transitionTimingFunction: {
+          spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.03em; }
+  p, li { line-height: 1.7; }
+
+  /* subtle grain for depth on dark/hero surfaces */
+  .grain { position: relative; }
+  .grain::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .field {
+    transition-property: box-shadow, border-color;
+    transition-duration: 200ms;
+  }
+  .field:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(24,51,45,0.15);
+    border-color: #18332D;
+  }
+  .field-dark:focus {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.18);
+  }
+  .form-error .field { border-color: #b3453f; }
+
+  [data-mobile-menu] { transform: translateY(-8px); opacity: 0; pointer-events: none; transition: transform 260ms cubic-bezier(0.34,1.56,0.64,1), opacity 200ms ease; }
+  [data-mobile-menu].is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+</style>
+</head>
+
+<body class="bg-ivory text-forest font-sans antialiased">
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-50 bg-ivory/90 backdrop-blur-md border-b border-forest/10">
+  <div class="max-w-[1240px] mx-auto px-6 sm:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a href="#top" class="flex items-center shrink-0">
+        <img src="assets/logo-forest.png" alt="Beavio" class="h-5 w-auto">
+      </a>
+
+      <nav class="hidden md:flex items-center gap-10" aria-label="Primary">
+        <a href="#the-set" class="text-[0.95rem] font-medium text-forest/80 hover:text-forest transition-colors">The Set</a>
+        <a href="#inspiration" class="text-[0.95rem] font-medium text-forest/80 hover:text-forest transition-colors">Inspiration</a>
+        <a href="#blog" class="text-[0.95rem] font-medium text-forest/80 hover:text-forest transition-colors">Blog</a>
+        <a href="#about" class="text-[0.95rem] font-medium text-forest/80 hover:text-forest transition-colors">About</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-6 shrink-0">
+        <a href="#free-guide" class="text-[0.95rem] font-medium text-forest/80 hover:text-forest transition-colors">Free Guide</a>
+        <a href="#join" class="inline-flex items-center gap-2 bg-forest text-white text-sm font-medium px-6 py-3 rounded-full shadow-soft hover:bg-forest-dark hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest">
+          Get Early Access
+        </a>
+      </div>
+
+      <button type="button" data-menu-toggle aria-label="Toggle menu" aria-expanded="false"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-forest/15 text-forest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" class="w-5 h-5">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <div data-mobile-menu class="md:hidden absolute left-0 right-0 bg-ivory border-b border-forest/10 shadow-lift px-6 py-6 flex flex-col gap-5">
+      <a href="#the-set" class="text-base font-medium">The Set</a>
+      <a href="#inspiration" class="text-base font-medium">Inspiration</a>
+      <a href="#blog" class="text-base font-medium">Blog</a>
+      <a href="#about" class="text-base font-medium">About</a>
+      <a href="#free-guide" class="text-base font-medium">Free Guide</a>
+      <a href="#join" class="inline-flex items-center justify-center gap-2 bg-forest text-white text-sm font-medium px-6 py-3 rounded-full">Get Early Access</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="relative overflow-hidden">
+    <div class="max-w-[1240px] mx-auto px-6 sm:px-8 pt-16 sm:pt-20 pb-14 grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-10 items-center">
+
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="text-[0.72rem] font-semibold tracking-[0.16em] uppercase text-forest/60">Beautiful events. Made simple.</span>
+          <span class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-forest bg-blush px-3 py-1 rounded-full">Early Launch</span>
+        </div>
+
+        <h1 class="font-display font-medium text-5xl sm:text-6xl leading-[1.04] text-forest mb-6">
+          Style a flower bar<br>in minutes.
+        </h1>
+
+        <p class="text-[1.05rem] text-forest/70 leading-[1.7] mb-8 max-w-[46ch]">
+          Thoughtfully designed stands and buckets for weddings, showers, and gatherings that feel effortlessly beautiful. We're putting on the finishing touches — join the list to shop first.
+        </p>
+
+        <form class="signup-form" data-source="hero" novalidate>
+          <div class="flex flex-col sm:flex-row gap-3 max-w-md">
+            <label class="sr-only" for="hero-email">Email address</label>
+            <input id="hero-email" type="email" name="email" required placeholder="Enter your email"
+              class="field flex-1 bg-white border border-forest/15 rounded-full px-5 py-3.5 text-[0.95rem] placeholder:text-forest/40">
+            <button type="submit"
+              class="inline-flex items-center justify-center gap-2 bg-forest text-white text-sm font-medium px-7 py-3.5 rounded-full shadow-soft hover:bg-forest-dark hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest">
+              Get Early Access
+            </button>
+          </div>
+          <p class="form-note text-xs text-forest/50 mt-3">Join now for 15% off your first order + free shipping on launch day.</p>
+          <p class="form-success hidden text-sm font-medium text-forest bg-blush px-4 py-3 rounded-xl mt-3" role="status">You're on the list! Watch your inbox for launch day details.</p>
+        </form>
+
+        <a href="#free-guide" class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 hover:decoration-forest underline-offset-4 mt-5">
+          Not ready to buy? Get the free guide first
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <ul class="flex flex-wrap gap-x-6 gap-y-3 mt-10 pt-8 border-t border-forest/10 text-sm font-medium text-forest/70">
+          <li class="flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px] text-forest"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            Set up in 15 minutes
+          </li>
+          <li class="flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px] text-forest"><path d="M12 20.5s-7.5-4.6-10-9.3C.4 8 2 4.5 5.6 4.1c2.1-.2 3.9 1 4.9 2.7C11.5 5 13.3 3.9 15.4 4.1c3.6.4 5.2 3.9 3.6 7.1-2.5 4.7-7 9.3-7 9.3z"/></svg>
+            Designed for real-life events
+          </li>
+          <li class="flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px] text-forest"><path d="M4 20c8 0 16-6 16-16C10 4 4 12 4 20z"/><path d="M5 19c4-5 8-8 14-11"/></svg>
+            Timeless pieces, made to last
+          </li>
+        </ul>
+      </div>
+
+      <div class="relative">
+        <img src="assets/hero-flower-bar.jpg"
+          alt="Beavio flower bar set styled with white and blush blooms at a garden wedding, string lights at dusk"
+          class="w-full rounded-[28px] shadow-lift object-cover aspect-[6/7]">
+        <div class="absolute -top-5 -right-5 sm:-top-6 sm:-right-6 w-32 h-32 sm:w-36 sm:h-36 bg-forest text-white rounded-full shadow-badge flex items-center justify-center text-center p-5">
+          <span class="font-display text-[0.85rem] leading-snug">Designed to make gatherings beautiful</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#the-set" aria-label="Scroll to learn more"
+      class="mx-auto mb-10 flex items-center justify-center w-10 h-10 rounded-full bg-white border border-forest/10 shadow-soft text-forest hover:-translate-y-0.5 transition-transform">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ THE SET INCLUDES ============ -->
+  <section id="the-set" class="bg-cream rounded-[28px] mx-4 sm:mx-6">
+    <div class="max-w-[1240px] mx-auto px-6 sm:px-10 py-20 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <span class="block text-[0.72rem] font-semibold tracking-[0.16em] uppercase text-forest/60 mb-4">The Set Includes</span>
+        <h2 class="font-display font-medium text-4xl sm:text-[2.75rem] leading-[1.1] mb-8">Everything you need for a beautiful flower bar.</h2>
+
+        <ul class="flex flex-col gap-5 mb-9">
+          <li class="flex items-start gap-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mt-0.5 shrink-0 text-forest"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+            <div>
+              <strong class="block font-semibold text-forest">2 Acacia Wood Stands</strong>
+              <span class="text-sm text-forest/60">10 cm and 15 cm high</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mt-0.5 shrink-0 text-forest"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+            <div>
+              <strong class="block font-semibold text-forest">4 Matte White Buckets</strong>
+              <span class="text-sm text-forest/60">20 cm high</span>
+            </div>
+          </li>
+        </ul>
+
+        <a href="#join" class="inline-flex items-center gap-2 bg-forest text-white text-sm font-medium px-7 py-3.5 rounded-full shadow-soft hover:bg-forest-dark hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest">
+          Notify Me at Launch
+        </a>
+      </div>
+
+      <img src="https://placehold.co/1000x820/F2E7E7/18332D?font=playfair-display&text=Stands+%26+Buckets+Detail%0A(1000%C3%97820)"
+        alt="Acacia wood stands and matte white buckets with size measurements"
+        class="w-full rounded-3xl shadow-soft object-cover aspect-[10/8]">
+    </div>
+  </section>
+
+  <!-- ============ MADE FOR REAL-LIFE GATHERINGS ============ -->
+  <section id="inspiration" class="max-w-[1240px] mx-auto px-4 sm:px-6 py-20 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-center">
+    <div class="relative rounded-[28px] overflow-hidden shadow-lift grain">
+      <img src="https://placehold.co/1200x820/F8F6F3/18332D?font=playfair-display&text=Styling+in+Progress%0A(lifestyle+photo%2Fvideo+1200%C3%97820)"
+        alt="Two people styling a flower bar together at a gathering"
+        class="w-full aspect-[4/3] object-cover">
+      <button type="button" aria-label="Play video"
+        class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-white/95 shadow-lift flex items-center justify-center text-forest hover:scale-105 transition-transform">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 translate-x-0.5"><path d="M9 7.5v9l7.5-4.5L9 7.5z"/></svg>
+      </button>
+    </div>
+    <div>
+      <span class="block text-[0.72rem] font-semibold tracking-[0.16em] uppercase text-forest/60 mb-4">Made for Real-Life Gatherings</span>
+      <h2 class="font-display font-medium text-3xl sm:text-4xl leading-[1.15] mb-5">From intimate showers to unforgettable celebrations.</h2>
+      <p class="text-forest/70 mb-6">Our flower bar makes it easy for guests to create something beautiful — no florist required. Be among the first to bring one home.</p>
+      <a href="#join" class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 hover:decoration-forest underline-offset-4">
+        Join the launch list
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ PERFECT PAIRINGS (AFFILIATE) ============ -->
+  <section class="max-w-[1240px] mx-auto px-4 sm:px-6 py-16">
+    <span class="block text-[0.72rem] font-semibold tracking-[0.16em] uppercase text-forest/60 mb-4">Perfect Pairings</span>
+    <h2 class="font-display font-medium text-3xl sm:text-4xl leading-[1.15] mb-10">Complete the experience.</h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+      <article class="group">
+        <a href="#" rel="sponsored noopener" target="_blank" class="block">
+          <img src="https://placehold.co/500x500/F8F6F3/18332D?font=playfair-display&text=Flower+Shears"
+            alt="Premium flower shears" class="w-full aspect-square object-cover rounded-2xl shadow-soft mb-4 group-hover:shadow-lift transition-shadow">
+          <h3 class="text-[0.95rem] font-medium text-forest">Premium Flower Shears</h3>
+          <p class="text-sm font-semibold text-forest/80 mt-1 mb-2">$59.00</p>
+          <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+            Shop now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </article>
+
+      <article class="group">
+        <a href="#" rel="sponsored noopener" target="_blank" class="block">
+          <img src="https://placehold.co/500x500/F2E7E7/18332D?font=playfair-display&text=Wrap+Paper"
+            alt="Kraft flower wrap paper" class="w-full aspect-square object-cover rounded-2xl shadow-soft mb-4 group-hover:shadow-lift transition-shadow">
+          <h3 class="text-[0.95rem] font-medium text-forest">Kraft Flower Wrap Paper</h3>
+          <p class="text-sm font-semibold text-forest/80 mt-1 mb-2">$24.00</p>
+          <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+            Shop now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </article>
+
+      <article class="group">
+        <a href="#" rel="sponsored noopener" target="_blank" class="block">
+          <img src="https://placehold.co/500x500/F8F6F3/18332D?font=playfair-display&text=Galvanized+Buckets"
+            alt="Set of six galvanized flower buckets" class="w-full aspect-square object-cover rounded-2xl shadow-soft mb-4 group-hover:shadow-lift transition-shadow">
+          <h3 class="text-[0.95rem] font-medium text-forest">Galvanized Flower Buckets <span class="text-forest/50 font-normal">(Set of 6)</span></h3>
+          <p class="text-sm font-semibold text-forest/80 mt-1 mb-2">$89.00</p>
+          <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+            Shop now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </article>
+
+      <article class="group">
+        <a href="#" rel="sponsored noopener" target="_blank" class="block">
+          <img src="https://placehold.co/500x500/F2E7E7/18332D?font=playfair-display&text=Chalkboard+Signs"
+            alt="Set of six wooden chalkboard signs" class="w-full aspect-square object-cover rounded-2xl shadow-soft mb-4 group-hover:shadow-lift transition-shadow">
+          <h3 class="text-[0.95rem] font-medium text-forest">Wooden Chalkboard Signs <span class="text-forest/50 font-normal">(Set of 6)</span></h3>
+          <p class="text-sm font-semibold text-forest/80 mt-1 mb-2">$54.00</p>
+          <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+            Shop now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </article>
+    </div>
+
+    <p class="text-xs text-forest/45 mt-10 max-w-[70ch]">Some links above are affiliate links. If you make a purchase through them, Beavio may earn a small commission at no extra cost to you. We only recommend products we genuinely love.</p>
+  </section>
+
+  <!-- ============ FREE GUIDE + BLOG DUAL BAND ============ -->
+  <section id="free-guide" class="max-w-[1240px] mx-auto px-4 sm:px-6 pb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 rounded-[28px] overflow-hidden shadow-lift">
+
+      <div class="bg-blush px-8 sm:px-12 py-14 flex flex-col sm:flex-row items-center gap-8">
+        <img src="https://placehold.co/300x380/FFFFFF/18332D?font=playfair-display&text=DIY+Bouquet+Guide"
+          alt="DIY Bouquet Guide with Flower Bar cover" class="w-32 sm:w-40 rounded-xl shadow-soft shrink-0">
+        <div>
+          <span class="block text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-forest/60 mb-3">Free Guide</span>
+          <h3 class="font-display font-medium text-2xl leading-tight mb-3">DIY Bouquet Guide<br>with Flower Bar</h3>
+          <p class="text-sm text-forest/65 mb-5">Step-by-step tips to help you (and your guests) create beautiful bouquets.</p>
+
+          <form class="signup-form" data-source="free-guide" novalidate>
+            <div class="flex gap-2">
+              <label class="sr-only" for="guide-email">Email address</label>
+              <input id="guide-email" type="email" name="email" required placeholder="Email address"
+                class="field flex-1 min-w-0 bg-white border border-forest/15 rounded-full px-4 py-2.5 text-sm placeholder:text-forest/40">
+              <button type="submit" aria-label="Get the guide"
+                class="shrink-0 w-11 h-11 rounded-full bg-forest text-white flex items-center justify-center hover:bg-forest-dark hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <p class="form-success hidden text-xs font-medium text-forest bg-white/70 px-3 py-2 rounded-lg mt-3" role="status">Check your inbox — your guide is on its way!</p>
+          </form>
+        </div>
+      </div>
+
+      <div id="blog" class="bg-forest grain text-white px-8 sm:px-12 py-14 flex flex-col sm:flex-row items-center gap-8">
+        <div class="order-2 sm:order-1">
+          <span class="block text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-blush/80 mb-3">From the Blog</span>
+          <h2 class="font-display font-medium text-2xl leading-tight mb-3">Ideas, tips &amp; inspiration</h2>
+          <p class="text-sm text-white/65 mb-5 max-w-[32ch]">Simple ideas to make your gatherings beautiful and effortless. New posts landing at launch.</p>
+          <a href="#" class="inline-flex items-center gap-1.5 text-sm font-medium text-white underline decoration-white/30 hover:decoration-white underline-offset-4">
+            Visit the Blog
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <img src="https://placehold.co/300x260/0F2420/F2E7E7?font=playfair-display&text=Tablescape"
+          alt="Styled table setting with a small Beavio flower bar centerpiece" class="order-1 sm:order-2 w-36 sm:w-40 rounded-xl shadow-lift shrink-0">
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-forest text-white/80 mt-10">
+  <div class="max-w-[1240px] mx-auto px-6 sm:px-8 pt-16 pb-10">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-12">
+
+      <div class="col-span-2">
+        <img src="assets/logo-white.png" alt="Beavio" class="h-5 w-auto mb-4">
+        <p class="text-sm text-white/55 max-w-[26ch] mb-5">Thoughtfully designed home goods for beautiful gatherings.</p>
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="Beavio on Pinterest" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]"><circle cx="12" cy="12" r="9"/><path d="M9.5 18c1-3 1.7-5.6 2.2-7.7.4-1.7 2.9-1.7 3.2 0 .2 1-.1 2-.6 3-.7 1.4.1 3 1.7 3 2.1 0 3.5-2 3.5-4.7 0-2.5-1.9-4.6-5-4.6-3.6 0-5.5 2.4-5.5 5 0 1 .3 1.6.8 2.2"/></svg>
+          </a>
+          <a href="#" aria-label="Beavio on Instagram" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="mailto:hello@beavio.com" aria-label="Email Beavio" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4.5 7l7.5 6 7.5-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-white mb-4">Shop</h4>
+        <a href="#the-set" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">The Set</a>
+        <a href="#" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">Perfect Pairings</a>
+        <a href="#" class="block text-sm text-white/60 hover:text-white transition-colors">Gift Cards</a>
+      </div>
+
+      <div>
+        <h4 class="text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-white mb-4">Company</h4>
+        <a href="#about" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">About</a>
+        <a href="#" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">Contact</a>
+        <a href="#" class="block text-sm text-white/60 hover:text-white transition-colors">Affiliate Program</a>
+      </div>
+
+      <div>
+        <h4 class="text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-white mb-4">Resources</h4>
+        <a href="#inspiration" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">Inspiration</a>
+        <a href="#blog" class="block text-sm text-white/60 hover:text-white mb-3 transition-colors">Blog</a>
+        <a href="#free-guide" class="block text-sm text-white/60 hover:text-white transition-colors">Free Guide</a>
+      </div>
+
+      <div class="col-span-2 md:col-span-1">
+        <h4 class="text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-white mb-4">Get inspiration &amp; tips</h4>
+        <p class="text-sm text-white/55 mb-4">Join our list for ideas, tips, and early-launch offers.</p>
+        <form class="signup-form" data-source="footer" novalidate>
+          <div class="flex gap-2">
+            <label class="sr-only" for="footer-email">Email address</label>
+            <input id="footer-email" type="email" name="email" required placeholder="Email address"
+              class="field field-dark flex-1 min-w-0 bg-white/10 border border-white/20 text-white rounded-full px-4 py-2.5 text-sm placeholder:text-white/40">
+            <button type="submit" aria-label="Subscribe"
+              class="shrink-0 w-11 h-11 rounded-full bg-blush text-forest flex items-center justify-center hover:bg-white hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <p class="form-success hidden text-xs font-medium text-white bg-white/10 px-3 py-2 rounded-lg mt-3" role="status">You're subscribed!</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 mt-12 pt-6">
+      <p class="text-xs text-white/45">© 2026 Beavio, Triple A Brands LLC. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Front-end only — no backend wired up yet.
+  // To go live: replace submitEmail() below with a real call to your email
+  // provider (Mailchimp/ConvertKit/Klaviyo embed or API, a Sheets webhook, etc).
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  async function submitEmail(email, source) {
+    console.log(`[signup:${source}]`, email);
+    return new Promise((resolve) => setTimeout(resolve, 400));
+  }
+
+  document.querySelectorAll('.signup-form').forEach((form) => {
+    const input = form.querySelector('input[type="email"]');
+    const successEl = form.querySelector('.form-success');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = input.value.trim();
+      const source = form.dataset.source || 'unknown';
+
+      if (!isValidEmail(email)) {
+        form.classList.add('form-error');
+        input.focus();
+        return;
+      }
+      form.classList.remove('form-error');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        await submitEmail(email, source);
+        input.value = '';
+        Array.from(form.children).forEach((el) => {
+          if (!el.classList.contains('form-success')) el.style.display = 'none';
+        });
+        if (successEl) successEl.classList.remove('hidden');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+
+    input.addEventListener('input', () => form.classList.remove('form-error'));
+  });
+
+  const menuToggle = document.querySelector('[data-menu-toggle]');
+  const mobileMenu = document.querySelector('[data-mobile-menu]');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
