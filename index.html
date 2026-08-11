@@ -470,8 +470,8 @@
 
 <script>
   // Submits to /api/subscribe, a Vercel serverless function that forwards to Mailchimp.
-  // See api/subscribe.js — requires MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID and
-  // MAILCHIMP_SERVER_PREFIX to be set as environment variables in Vercel.
+  // See api/subscribe.js — requires MAILERLITE_API_KEY (and optionally
+  // MAILERLITE_GROUP_ID) to be set as environment variables in Vercel.
 
   function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
