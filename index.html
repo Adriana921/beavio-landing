@@ -469,17 +469,24 @@
 </footer>
 
 <script>
-  // Front-end only — no backend wired up yet.
-  // To go live: replace submitEmail() below with a real call to your email
-  // provider (Mailchimp/ConvertKit/Klaviyo embed or API, a Sheets webhook, etc).
+  // Submits to /api/subscribe, a Vercel serverless function that forwards to Mailchimp.
+  // See api/subscribe.js — requires MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID and
+  // MAILCHIMP_SERVER_PREFIX to be set as environment variables in Vercel.
 
   function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
   async function submitEmail(email, source) {
-    console.log(`[signup:${source}]`, email);
-    return new Promise((resolve) => setTimeout(resolve, 400));
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Subscription failed');
+    }
   }
 
   document.querySelectorAll('.signup-form').forEach((form) => {
@@ -507,6 +514,15 @@
           if (!el.classList.contains('form-success')) el.style.display = 'none';
         });
         if (successEl) successEl.classList.remove('hidden');
+      } catch (err) {
+        let errorEl = form.querySelector('.form-submit-error');
+        if (!errorEl) {
+          errorEl = document.createElement('p');
+          errorEl.className = 'form-submit-error text-xs font-medium mt-3';
+          errorEl.style.color = '#b3453f';
+          form.appendChild(errorEl);
+        }
+        errorEl.textContent = "Something went wrong — please try again.";
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }
