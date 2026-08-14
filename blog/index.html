@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Beavio</title>
+<meta name="description" content="Ideas, tips, and inspiration for styling beautiful, effortless gatherings — from Beavio.">
+<link rel="icon" href="../assets/logo-forest.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Beavio Blog — Ideas, Tips & Inspiration">
+<meta property="og:description" content="Ideas, tips, and inspiration for styling beautiful, effortless gatherings — from Beavio.">
+<meta property="og:image" content="https://www.beavioshop.com/assets/inspiration-detail.jpg">
+<meta property="og:url" content="https://www.beavioshop.com/blog/index.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: { DEFAULT: '#18332D', dark: '#0F2420' },
+          ivory: '#F5F1EC',
+          cream: '#F8F6F3',
+          blush: { DEFAULT: '#F0D9DA', dark: '#E6BEC1' },
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'Georgia', 'serif'],
+          sans: ['"Inter"', 'sans-serif'],
+        },
+        boxShadow: {
+          soft: '0 1px 2px rgba(24,51,45,0.04), 0 12px 28px -8px rgba(24,51,45,0.18)',
+          lift: '0 2px 4px rgba(24,51,45,0.06), 0 20px 40px -12px rgba(24,51,45,0.28)',
+        },
+      }
+    }
+  }
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.03em; }
+</style>
+</head>
+
+<body class="bg-ivory text-forest font-sans antialiased">
+
+<header class="border-b border-forest/10">
+  <div class="max-w-[900px] mx-auto px-6 sm:px-8 flex items-center justify-between h-20">
+    <a href="../index.html" class="flex items-center shrink-0">
+      <img src="../assets/logo-forest.png" alt="Beavio" class="h-5 w-auto">
+    </a>
+    <a href="../index.html#top" class="inline-flex items-center gap-2 bg-forest text-white text-sm font-medium px-6 py-3 rounded-full shadow-soft hover:bg-forest-dark hover:-translate-y-0.5 active:translate-y-0 transition-transform transition-colors">
+      Get Early Access
+    </a>
+  </div>
+</header>
+
+<main class="max-w-[900px] mx-auto px-6 sm:px-8 py-16 sm:py-20">
+  <span class="block text-[0.72rem] font-semibold tracking-[0.16em] uppercase text-forest/60 mb-4">Journal</span>
+  <h1 class="font-display font-medium text-4xl sm:text-5xl leading-[1.1] mb-14">Ideas, tips &amp; inspiration.</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
+    <a href="how-to-style-a-flower-bar-for-a-bridal-shower.html" class="group block">
+      <img src="../assets/inspiration-styling.jpg" alt="A guest styling fresh flowers at a garden bridal shower flower bar" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-soft group-hover:shadow-lift transition-shadow duration-500 mb-5">
+      <span class="block text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-forest/50 mb-2">Styling Guide</span>
+      <h2 class="font-display font-medium text-2xl leading-snug mb-2">How to Style a Flower Bar for a Bridal Shower</h2>
+      <p class="text-sm text-forest/65 mb-3">A simple, no-florist-required guide to a flower bar guests will remember.</p>
+      <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+        Read the post <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="5-diy-bouquet-ideas-for-your-next-gathering.html" class="group block">
+      <img src="../assets/the-set-detail.jpg" alt="Buckets of flowers styled for DIY bouquet-making at a gathering" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-soft group-hover:shadow-lift transition-shadow duration-500 mb-5">
+      <span class="block text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-forest/50 mb-2">Bouquet Ideas</span>
+      <h2 class="font-display font-medium text-2xl leading-snug mb-2">5 DIY Bouquet Ideas for Your Next Gathering</h2>
+      <p class="text-sm text-forest/65 mb-3">Five easy bouquet styles that look pulled-together every time.</p>
+      <span class="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-forest/30 group-hover:decoration-forest underline-offset-4">
+        Read the post <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+  </div>
+</main>
+
+<footer class="border-t border-forest/10 py-10">
+  <div class="max-w-[900px] mx-auto px-6 sm:px-8">
+    <p class="text-xs text-forest/45">© 2026 Beavio, Triple A Brands LLC. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
