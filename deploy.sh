@@ -3,12 +3,10 @@
 set -e
 cd "$(dirname "$0")"
 
-if git diff --quiet && git diff --cached --quiet; then
-  echo "No hay cambios que subir."
-  exit 0
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  git add -A
+  git commit -m "${1:-Update site}"
 fi
 
-git add -A
-git commit -m "${1:-Update site}"
 git push origin main
 echo "Listo. Vercel va a desplegar los cambios en 1-2 minutos."
